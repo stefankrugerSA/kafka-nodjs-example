@@ -62,10 +62,11 @@ admin.on('ready', (err) => {
 processMessage = async ({ topic, value, offset, partition, highWaterOffset, key }) => {
     //highly impotence, check if message has been consumed before
     var isDuplicate = await checkForDuplicateMessage(key).catch(e=>{return e})
+    let msgValue = JSON.parse(value);
     if(!isDuplicate){
         //process the message here
     }
-    console.log(`Recieved Message : ${JSON.stringify({ topic, value, offset, partition, highWaterOffset, key })}`);
+    console.log(`Recieved Message : ${JSON.stringify({ topic, msgValue, offset, partition, highWaterOffset, key })}`);
     
 }
 

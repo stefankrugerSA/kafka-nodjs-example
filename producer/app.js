@@ -3,7 +3,7 @@ const express = require('express'),
   kafkaServer = process.env.KAFKA_SERVER || "127.0.0.1:9092",
   kafka = require('kafka-node'),
   Producer = kafka.Producer,
-  client = new kafka.KafkaClient({kafkaHost:kafkaServer}),
+  client = new kafka.KafkaClient({ kafkaHost: kafkaServer }),
   producer = new Producer(client),
   KeyedMessage = kafka.KeyedMessage,
   app = express(),
@@ -13,6 +13,10 @@ const express = require('express'),
 producer.on('ready', async () => {
   console.log('[kafka-producer] -> ready')
   app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+});
+
+app.configure(function () {
+  app.use(express.bodyParser());
 });
 
 producer.on('error', (err) => {
